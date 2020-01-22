@@ -5,8 +5,6 @@
 
 using namespace std;
 
-// 아직 미완!!!
-
 int solution(vector<vector<int>> baseball) {
 	int answer = 0;
 
@@ -39,7 +37,6 @@ int solution(vector<vector<int>> baseball) {
 		}
 
 		do {
-
 			string p;
 
 			for (int j = 0; j < s.size(); j++) {
@@ -56,12 +53,14 @@ int solution(vector<vector<int>> baseball) {
 
 	for (auto j : baseball) {
 
+		string q = to_string(j[0]);
+
+		vector<string> temp;
+
 		for (int i = results.size() - 1; i >= 0; i--) {
 
 			int s = 0;
 			int b = 0;
-
-			string q = to_string(j[0]);
 
 			for (int k = 0; k < 3; k++)
 			{
@@ -71,17 +70,17 @@ int solution(vector<vector<int>> baseball) {
 				else if (index != string::npos) b++;
 			}
 
+			if ((s == j[1] && b == j[2])) {
 
-
-			if (!(s == j[1] && b == j[2])) {
-				cout << i << " " << results[i]<< " pop" << endl;
-				results.pop_back();
-				i--;
+				temp.push_back(results[i]);
 			}
+			results.pop_back();
+
 		}
 
-		cout << "next" << endl << endl;
-				
+		for (auto i : temp) {
+			results.push_back(i);
+		}
 	}
 
 	answer = results.size();
