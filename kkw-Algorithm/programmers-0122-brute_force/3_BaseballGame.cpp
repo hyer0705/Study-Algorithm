@@ -6,6 +6,9 @@
 using namespace std;
 
 int solution(vector<vector<int>> baseball) {
+	
+	// 세 자리로 만들 수 있는 모든 조합 뽑아내기
+	
 	int answer = 0;
 
 	int n = 9;
@@ -50,6 +53,8 @@ int solution(vector<vector<int>> baseball) {
 
 	} while (next_permutation(idx.begin(), idx.end(), greater<int>()));
 
+
+	// 주어진 문제마다 만든 조합들을 모두 돌려 해당 안될경우 삭제, 남은 조합들로 다음 문제 진행
 
 	for (auto j : baseball) {
 
