@@ -11,31 +11,29 @@ int solution(vector<vector<int>> baseball) {
 	
 	int answer = 0;
 
-	int n = 9;
-	int r = 3;
-
-	vector<int> idx;
+	vector<int> v;
 	vector<int> list;
 
 	vector<string > results;
 
-	for (int i = 1; i <= n; i++) {
+	for (int i = 1; i <= 9; i++) {
 		list.push_back(i);
 	}
 
-	for (int i = 0; i < r; i++)
-		idx.push_back(1);
-	for (int i = 0; i < n - r; i++)
-		idx.push_back(0);
+	for (int i = 0; i < 3; i++)
+		v.push_back(1);
 
-	sort(idx.begin(), idx.end(), greater<int>());
+	for (int i = 0; i < 9 - 3; i++)
+		v.push_back(0);
+
+	sort(v.begin(), v.end(), greater<int>());
 
 	do {
 		string s;
 
-		for (int i = 0; i < n; i++) {
+		for (int i = 0; i < 9; i++) {
 
-			if (idx[i] == 1)
+			if (v[i] == 1)
 				s += to_string(list[i]);
 		}
 
@@ -51,7 +49,7 @@ int solution(vector<vector<int>> baseball) {
 
 		} while (next_permutation(s.begin(), s.end()));
 
-	} while (next_permutation(idx.begin(), idx.end(), greater<int>()));
+	} while (next_permutation(v.begin(), v.end(), greater<int>()));
 
 
 	// 주어진 문제마다 만든 조합들을 모두 돌려 해당 안될경우 삭제, 남은 조합들로 다음 문제 진행
