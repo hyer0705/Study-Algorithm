@@ -4,52 +4,42 @@
 #include <iostream>
 #include <stack>
 
-// 1번빼고 다 시간초과 돼서 수정해야 함
 using namespace std;
 
 vector<int> solution(vector<int> progresses, vector<int> speeds) {
 
 	vector<int> answer;
-	stack<int> done;
 
-	int published = 0;
+	stack<int> time;
 
-	while (published < progresses.size())
+	for (int i = progresses.size() - 1; i >= 0; i--)
 	{
-		for (int i = progresses.size() - 1; i >= 0; i--)
+		time.push((100 - progresses[i]) / speeds[i]);
+	}
+
+	int ans = 0;
+	int min = time.top();
+
+	while (!time.empty())
+	{
+		if (time.top() <= min)
 		{
-			progresses[i] += speeds[i];
-
-			if (progresses[i] >= 100)
-			{
-				progresses[i] = speeds[i] = 0;
-				done.push(i);
-			}
+			ans++;
+			time.pop();
 		}
-
-		int ans = 0;
-		int done_size = done.size();
-
-		for (int i = 0; i < done_size; i++)
-		{
-
-			if (done.top() <= published)
-			{
-				done.pop();
-				++ans;
-				++published;
-
-			}
-		}
-
-		if (ans > 0)
+		else
 		{
 			answer.push_back(ans);
+			ans = 0;
+			min = time.top();
 		}
 	}
 
+	answer.push_back(ans);
+
 	return answer;
 }
+
 
 int main()
 {
