@@ -5,19 +5,18 @@ import java.util.Arrays;
 public class Immigration {
 
 	public static long solution(int n, int[] times) {
-		
+		long answer = 0;
 		// times 정렬 하기 ** 이분탐색은 정렬이 되어 있다고 가정하고 시작하기 때문
 		Arrays.sort(times);
 		
 		// binary search 준비
 		long low = 1; // 1분을 뜻함
 		long high = (long)times[times.length - 1] * n;// 최악의 경우의 수 계산
-		long mid = (low + high) / 2;
+		long mid = 0;
 		
-		// low 와 high 가 같거나 작을 경우에만 반복
-		// low > high 인 경우 반복문 종료
-		// low 가 답이 됨!
-		while(low <= high) {
+		while(low <= high) { // low 값이 high 값보다 작거나 같을 때까지만 반복
+			
+			mid = (low + high) / 2;
 
 			long total = 0; // 각 심사관들이 mid 시간에 맡을 수 있는 인원들의 합
 			
@@ -26,27 +25,34 @@ public class Immigration {
 				total += (mid / time);
 			}
 
-			// 인원들의 합과 입력받은 인원수가 같다면 반복문 탈출
-			// ** 조건 다시 생각하기
+			// 인원들의 합이 입력받은 인원수보다 크거나 같을 경우 high 값 변경
 			if ( total >= n ) {
 				high = mid - 1;
-			} else if ( total < n ) {
-				low = mid + 1;
+				// answer 에 mid 값 저장
+				// 인원수의 합은 n과 크거나 같을 경우에만 mid 값에 넣는다.
+				// 많은 경우의 수를 따져봤을 때 answer는 가장 짧은 시간을 답으로 하는 것이므로
+				// 인원수의 총 합이 조건의 인원수보다 작을 경우는 생각하지 않는다.
+				answer = mid;
+//				System.out.println("mid : " + mid);
+			} 
+			// 인원들의 합이 입력받은 인원수보다 작을 경우 low 값 변경
+			else {
+				low = mid + 1;		
+//				System.out.println("mid :" + mid);
 			}
 			
-			mid = (low + high) / 2;
 		}
 		
-		System.out.println("low : " + low + ", high : " + high + ",mid : " + mid);
-		
-		return low;
-	}
+		return answer;
+    }
 	
 	public static void main(String[] args) {
-		int n = 6; // 입국 심사를 기다리는 사람
-		int[] times = {7, 10}; // 각 심사관이 한 명을 심사하는데 걸리는 시간
+		int n = 6;
+		int[] times = {
+				7, 10
+		};
 		
 		long result = solution(n, times);
-		System.out.println(result);
+		System.out.println("result : " + result);
 	}
 }
