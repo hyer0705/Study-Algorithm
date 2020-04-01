@@ -19,3 +19,13 @@ GROUP BY HOUR(DATETIME)
 ORDER BY HOUR(DATETIME);
 
 -- 입양 시각 구하기(2)
+SET @hour = -1; 
+
+SELECT @hour := @hour + 1 AS HOUR, 
+    (SELECT COUNT(DATETIME) 
+     FROM ANIMAL_OUTS O
+     WHERE HOUR(DATETIME) = @hour )
+AS COUNT 
+FROM ANIMAL_OUTS O
+
+WHERE @hour < 23
